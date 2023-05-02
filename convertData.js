@@ -2,29 +2,27 @@
 const fs = require("fs");
 const csv = require("csvtojson");
 
-const createCar = async () => {
-  let newData = await csv().fromFile("./archive/data.csv");
-  let data = JSON.parse(fs.readFileSync("./archive/carData.json"));
+const convertData = async () => {
+  let newData = await csv().fromFile("./data/data.csv");
+  let data = JSON.parse(fs.readFileSync("./data/cars.json"));
 
-  newData = newData.slice(0, 200).map((e, i) => {
+  newData = newData.slice(0, 200).map(item => {
     return {
-      id: Number(i + 1),
-      make: e.Make,
-      model: e.Model,
-      release_date: e.Year,
-      transmission_type: e["Transmission Type"],
-      size: e["Vehicle Size"],
-      style: e["Vehicle Style"],
-      price: e.MSRP,
+      make: item.Make,
+      model: item.Model,
+      release_date: item.Year,
+      transmission_type: item["Transmission Type"],
+      size: item["Vehicle Size"],
+      style: item["Vehicle Style"],
+      price: item.MSRP,
     };
   });
 
-  data.data = newData;
-  data.totalCar = newData.length;
+  data = newData;
 
-  fs.writeFileSync("./archive/carData.json", JSON.stringify(data));
+  fs.writeFileSync("./data/cars.json", JSON.stringify(data));
 
   console.log("Data converted successfully!");
 };
 
-createCar();
+convertData();
