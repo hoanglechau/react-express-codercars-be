@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const carSchema = new mongoose.Schema(
 	{
 		make: {
@@ -16,12 +16,18 @@ const carSchema = new mongoose.Schema(
 		},
 		transmission_type: {
 			type: String,
-			enum: ['MANUAL', 'AUTOMATIC', 'AUTOMATED_MANUAL', 'DIRECT_DRIVE', 'UNKNOWN'],
+			enum: [
+				"MANUAL",
+				"AUTOMATIC",
+				"AUTOMATED_MANUAL",
+				"DIRECT_DRIVE",
+				"UNKNOWN",
+			],
 			required: true,
 		},
 		size: {
 			type: String,
-			enum: ['Compact', 'Midsize', 'Large'],
+			enum: ["Compact", "Midsize", "Large"],
 			required: true,
 		},
 		style: {
@@ -39,21 +45,21 @@ const carSchema = new mongoose.Schema(
 	}
 );
 
-carSchema.pre(/^find/, function (next) {
-	if (!('_conditions' in this)) return next();
-	if (!('isDeleted' in carSchema.paths)) {
-		delete this['_conditions']['all'];
-		return next();
-	}
-	if (!('all' in this['_conditions'])) {
-		//@ts-ignore
-		this['_conditions'].isDeleted = false;
-	} else {
-		delete this['_conditions']['all'];
-	}
-	next();
-});
+// carSchema.pre(/^find/, function (next) {
+//   if (!("_conditions" in this)) return next();
+//   if (!("isDeleted" in carSchema.paths)) {
+//     delete this["_conditions"]["all"];
+//     return next();
+//   }
+//   if (!("all" in this["_conditions"])) {
+//     //@ts-ignore
+//     this["_conditions"].isDeleted = false;
+//   } else {
+//     delete this["_conditions"]["all"];
+//   }
+//   next();
+// });
 
-const Car = mongoose.model('Car', carSchema);
+const Car = mongoose.model("Cars", carSchema);
 
 module.exports = Car;
